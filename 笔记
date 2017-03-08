@@ -1,0 +1,15 @@
+一、实现给div 添加图片背景 的两种方法：
+1.直接法：直接使用background方法进行背景设置。
+	<div style="background:url(图片路径) no-repeat"> 
+	</div>
+2.间接法：在div中间填充一个100%大小的img标签，可以让背景图片随着div大小拉伸。
+	<div >
+	<img style="width:100%;height:100%" src="图片路径"> 
+	</div>
+
+二、可以给div添加盒子属性，使得对其添加padding时保持宽和高不变。不同的浏览器添加方法如下：
+	-moz-box-sizing: border-box; /*Firefox3.5+*/
+	-webkit-box-sizing: border-box; /*Safari3.2+*/
+	-o-box-sizing: border-box; /*Opera9.6*/
+	-ms-box-sizing: border-box; /*IE8*/
+	box-sizing: border-box;搜索 /*W3C标准(IE9+，Safari5.1+,Chrome10.0+,Opera10.6+都符合box-sizing的w3c标准语法)*/
