@@ -24,6 +24,9 @@
         label{
             font-size:12px;
         }
+        .line{
+            width:140px;
+        }
         #head,#foot{
             width:100%;
             height:70px;
@@ -133,20 +136,19 @@
 
 
         <h4 style="padding:10px;">这里以后是一个侧栏，这是侧栏的标题</h4>
-        <label style="margin-left: 10px;">请输入邮箱地址： <input type="text" name="emailAddress"value="这是一个文本输入框" style="font-size:12px"></label>
+        <label style="margin-left: 13px;">请输入邮箱地址：<input class="line" type="text" name="emailAddress"value="这是一个文本输入框" style="font-size:12px"></label>
         <br>
         <label style="color:#cccccc;margin-left:110px;">邮箱地址请按格式输入</label>
         <br>
-        <label style="margin-left:37px;">请输入密码：<input type="text" name="password" value="*****"></label>
+        <label style="margin-left:37px;">请输入密码：<input class="line" type="text" name="password" value="*****"></label>
         <br>
         <br>
-        <label style="margin-left:14px;">请重复输入密码：<input type="text" name="password2" value="*****"></label>
+        <label style="margin-left:14px;">请重复输入密码：<input class="line" type="text" name="password2" value="*****"></label>
         <br>
-        <p style="color:#cccccc;margin-left:552px;">密码为6-16位英文数字</p>
-        <br>
-        <label style="margin-left:507px;">性别 <input  name="sex" type="radio" checked style="margin-left:10px;"/>male </label>  <label><input name="sex" type="radio" value="" />female</label>
+        <p style="color:#cccccc;margin-left:88px;font-size:12px">密码为6-16位英文数字</p>
+        <label style="margin-left:71px;">性别 <input  name="sex" type="radio" checked style="margin-left:10px;"/>male </label>  <label><input name="sex" type="radio" value="" />female</label>
         <br><br>
-        <label  style="margin-left:507px;">城市
+        <label  style="margin-left:71px;">城市
             <select id="location" style="margin-left:10px;">
                 <option value="0" selected="" >北京</option>
                 <option value="90">上海</option>
@@ -155,22 +157,20 @@
             </select>
         </label>
         <br><br>
-        <label style="margin-left:507px;">
+        <label style="margin-left:71px;">
             爱好<input style="margin-left:10px;" type="checkbox" name="hobby" value="Bike" /> 篮球
             <input type="checkbox" name="hobby" value="Bike" />骑车
             <input type="checkbox" name="hobby" value="Bike" /> 游泳
         </label>
         <br><br>
-        <label style="margin-left:480px;">个人描述
-            <textarea rows="5" cols="60"  style="margin-left:10px;">
-
-    这是多行输入框，输入您的个人描述。
+        <label style="margin-left:45px;">个人描述
+            <textarea rows="4" cols="20"  style="margin-left:10px">输入您的个人描述。
     </textarea>
 
         </label>
-        <br>  <br>
-        <button  style="height:50px;width:100%;background: #3355d0;text-align: center;color: white;font-size:25px;
-border-radius:10px">确认提交</button>
+        <br>
+        <button  style="height:40px;width:100%;background: #3355d0;text-align: center;color: white;font-size:25px;
+border-radius:5px">确认提交</button>
 
 
     </div>
