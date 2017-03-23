@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <title>IFE JavaScript Task 01</title>
+
+      <style type="text/css">
+          #num_show div{
+          box-sizing:border-box;
+          width:15px;
+          text-align:center;
+          background:red;
+          color:#ffffff;
+          float:left;
+          margin-left:2px;       
+          bottom:10px;
+
+          }
+          #num_show {
+              position:relative;
+              border:1px solid;
+              border-color:black;
+              height:550px;
+                        
+          }
+      </style>
+  </head>
+    
+<body>
+
+  <input id="num" type="text">
+  <button id="left_in" class="in">左侧入</button>
+  <button id="right_in"class="in">右侧入</button>  
+
+  <button id="left_out" class="out">左侧出</button>
+  <button id="right_out" class="out">右侧出</button>
+  <button id="sort">排序</button>
+    <div id="num_show">
+
+    </div>
+<script type="text/javascript">
+    var num_list = new Array();
+    
+    num_list = [14,57,67,89,54,78,14,68,36,89,55,45,35,12,49];
+    flash();
+
+    //控制点击清除卡片..
+    //  document.getElementsByClassName("num").({ "hover": delCard() });
+    //live可以给动态添加的元素绑定方法。
+    $("#num_show div").live("click", function delCard() {
+
+        //获取点击元素的index从而知道删除num_list中哪个元素。
+        var ind = $("#num_show").find("div").index(this);
+        //splice方法删除从ind开始的1个元素。也就是ind本身。
+        num_list.splice(ind, 1);
+
+        flash();
+    });
+
+
+
+    //刷新页面卡片显示的方法
+    function flash() {
+        document.getElementById("num_show").innerHTML = "";
+        for (var i = 0; i < num_list.length; i++) {
+            var obj = document.createElement("div");
+            obj.className = "num";
+            obj.innerHTML = num_list[i];
+            obj.style.height = num_list[i] * 5 + "px";
+            //让红色方块沿着下部对齐。
+            obj.style.marginTop =( $("#num_show").height() - 20 - parseInt(obj.style.height)) + "px";
+            //obj.onclick = delCard();
+            document.getElementById("num_show").appendChild(obj);
+        }
+    }
+    //window.onload = function () { (".num").live("click", delCard()); }
+
+    //给输入按钮绑定方法。
+    $(".in").on("click", function () {
+        var number = document.getElementById("num").value;
+        var isn = /^[0-9]+.?[0-9]*$/;
+        if (isn.test(number) && (num_list.length < 60)) {
+            if ((10 <= number)&&(number <= 100)) {
+                if ($(this).attr("id") == "left_in") {
+                    num_list.unshift(number);
+                }
+                else {
+                    num_list.push(number);
+                }
+                flash();
+            }
+            else { alert("请输入10-100之间")}
+        }
+        else { alert("无法添加") }
+    })
+    $(".out").on("click", function () {
+        if ($(this).attr("id") == "left_out") {
+            alert("即将删除" + num_list[0]);
+            num_list.splice(0, 1);
+        }
+        else {
+            alert("即将删除" + num_list[-1]);
+            num_list.splice(-1, 1);
+        }
+        flash();
+    })
+    //排序
+    $("#sort").on('click', function () {
+        bubsort(num_list);
+        flash();
+        
+    })
+    function bubsort(arr,func) {
+        for (var i = 0; i < arr.length - 1; i++) {
+            for (var j = 0; j < arr.length - i - 1; j++) {
+                if (arr[j] >= arr[j + 1]) {
+                    var n = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = n;
+                    
+                    
+                }
+            }
+        }
+    }
+
+</script>
+</body>
+</html>
