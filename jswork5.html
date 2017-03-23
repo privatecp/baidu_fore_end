@@ -42,7 +42,7 @@
 <script type="text/javascript">
     var num_list = new Array();
     
-    num_list = [14,57,67,89,54,78,14,68,36,89,55,45,35,12,49];
+    num_list = [14,57,67,89,54,78,14,68,36,89,55,45,35,12,49,14,99,80,2,54];
     flash();
 
     //控制点击清除卡片..
@@ -107,22 +107,35 @@
     })
     //排序
     $("#sort").on('click', function () {
-        bubsort(num_list);
-        flash();
+        bubsort(num_list,flash);
+        
         
     })
-    function bubsort(arr,func) {
-        for (var i = 0; i < arr.length - 1; i++) {
-            for (var j = 0; j < arr.length - i - 1; j++) {
-                if (arr[j] >= arr[j + 1]) {
-                    var n = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = n;
-                    
-                    
-                }
+    function bubsort(arr, func) {
+        var i = 0;
+        
+        timer1 = setInterval(function () {
+            var j = 0;
+            if (i < arr.length - 1) {
+                timer2 = setInterval(function () {
+                    if (j < arr.length - i) {
+                        if (arr[j] >= arr[j + 1]) {
+                            var n = arr[j];
+                            arr[j] = arr[j + 1];
+                            arr[j + 1] = n;
+                            func();
+                        }
+                        j++;
+                    }
+                    else { clearInterval(timer2); return; };
+                }, 100);
+                i++;
             }
-        }
+            
+            else
+            { clearInterval(timer1); return; }
+
+        },3000);
     }
 
 </script>
