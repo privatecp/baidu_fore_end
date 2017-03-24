@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <title>IFE JavaScript Task 01</title>
+
+      <style type="text/css">
+          #num_show div{
+          box-sizing:border-box;
+          text-align:center;
+          padding:0px;
+          background:red;
+          width:20px;
+          color:#ffffff;
+          float:left;
+          margin:5px;
+          }
+          .march {
+          background:#00ff21;
+          }
+      </style>
+  </head>
+    
+<body>
+    
+    <textarea id="strs" rows="3" cols="20"></textarea>
+  <button id="left_in" class="in">左侧入</button>
+  <button id="right_in"class="in">右侧入</button>  
+
+  <button id="left_out" class="out">左侧出</button>
+  <button id="right_out" class="out">右侧出</button>
+    <input id="srh" type="text">
+    <button id="search">搜索字段</button>
+    <div id="num_show">
+    </div>
+<script type="text/javascript">
+    var num_list = new Array();
+    num_list = [6, 2, 4, 5, 6, 7];
+
+    flash();
+
+    //控制点击清除卡片..
+    //  document.getElementsByClassName("num").({ "hover": delCard() });
+    //live可以给动态添加的元素绑定方法。
+    $("#num_show div").live("click", function delCard() {
+
+        //获取点击元素的index从而知道删除num_list中哪个元素。
+        var ind = $("#num_show").find("div").index(this);
+        //splice方法删除从ind开始的1个元素。也就是ind本身。
+        num_list.splice(ind, 1);
+
+        flash();
+    });
+
+
+
+    //刷新页面卡片显示的方法
+    function flash() {
+        document.getElementById("num_show").innerHTML = "";
+        for (var i = 0; i < num_list.length; i++) {
+            var obj = document.createElement("div");
+            obj.className = "num";
+            obj.innerHTML = num_list[i];
+            //obj.onclick = delCard();
+            document.getElementById("num_show").appendChild(obj);
+        }
+    }
+    //window.onload = function () { (".num").live("click", delCard()); }
+
+    //给输入按钮绑定方法。
+    $(".in").on("click", function () {
+        var str = document.getElementById("strs").value.split(/[,_\n\s\t，、]/);
+        
+        //var isn = /^[0-9]+.?[0-9]*$/;
+        if (str[0]!= "") {
+            if ($(this).attr("id") == "left_in") {
+
+                for (var i = 0; i < str.length; i++) {
+                    num_list.splice(i, 0, str[i]);
+                }
+
+            }
+            else {
+                for (var i = 0; i < str.length; i++) {
+                    num_list.push(str[i]);
+                }
+            }
+            flash();
+        }
+    })
+    $(".out").on("click", function () {
+        if ($(this).attr("id") == "left_out") {
+            alert("即将删除" + num_list[0]);
+            num_list.splice(0, 1);
+        }
+        else {
+            alert("即将删除" + num_list[num_list.length-1]);
+            num_list.splice(-1, 1);
+        }
+        flash();
+    })
+    $("#search").on("click",function()
+    {
+        flash();
+        var sstr = new RegExp("^.*" + $("#srh").val() + ".*$");
+        
+        var n = $("#num_show").children().length;
+        //alert(sstr);
+        for (var i = 0; i < n; i++) {
+            
+            if (sstr.test($("#num_show").children()[i].innerHTML)) {
+               // alert("找到");
+                $("#num_show").children()[i].style.background = "#00ff21";
+            }
+           
+        }
+    })
+
+</script>
+</body>
+</html>
