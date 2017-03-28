@@ -96,59 +96,91 @@
      <input id="Button2" type="button" value="中序遍历" />
      <input id="Button3" type="button" value="后序遍历" />
     <script type="text/javascript">
+        var divList = [];
+        timer = null;
+
         function preOrder(node) {
             //           alert("1");
-           var timer1= setTimeout(function () {
-                if (!node.has('div').length == 0) {
-                    node.css('background', 'red');
 
-                    preOrder($(node.children("div").get(0)));
+            if (node.length>0) {
 
-                    preOrder($(node.children("div").get(1)));
+                divList.push(node);
 
-                }
-                else { node.css('background', 'red');  }
-            }, 1000);
+                preOrder($(node.children("div").get(0)));
+
+                preOrder($(node.children("div").get(1)));
+
+            }
+           
         }
 
         function inOrder(node) {
             //           alert("1");
-            var timer1 = setTimeout(function () {
-                if (!node.has('div').length == 0) {
+           
+            if (node.length > 0) {
                     
 
                     inOrder($(node.children("div").get(0)));
-                    node.css('background', 'red');
+                    divList.push(node);
                     inOrder($(node.children("div").get(1)));
 
                 }
-                else { node.css('background', 'red'); }
-            }, 1000);
+               
+         
         }
 
         function postOrder(node) {
             //           alert("1");
-            var timer1 = setTimeout(function () {
-                if (!node.has('div').length == 0) {                   
+            
+            if (node.length > 0) {
 
                     postOrder($(node.children("div").get(0)));
 
                     postOrder($(node.children("div").get(1)));
 
-                    node.css('background', 'red');
+                    divList.push(node);
                 }
-                else { node.css('background', 'red'); }
-            }, 1000);
+             
+        }
+        function Render(arr) {
+            var i = 0;
+            divList[i].css("background-color", "yellow")
+            timer = setInterval(function () {
+                if (i < divList.length-1) {
+                    i++;
+                    divList[i - 1].css("background-color", "#fff");
+                    divList[i].css("background-color", "yellow");
+                }
+                else {
+                    clearInterval(timer);
+                    divList[i - 1].css("background-color", "#fff");
+                }
+            }, 500);
+        }
+        function reset() {
+            for (var i = 0; i < divList.length; i++) {
+                divList[i].css("background-color","#fff");
+            }
+            divList = [];
+            clearInterval(timer);
+
         }
 
         $("#Button1").click(function () {
+            reset();
             preOrder($(".beginner"));
+            Render(divList);
+
         })
         $("#Button2").click(function () {
+            reset();
             inOrder($(".beginner"));
+            Render(divList);
         })
         $("#Button3").click(function () {
+            reset();
             postOrder($(".beginner"));
+            Render(divList);
         })
 
     
