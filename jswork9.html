@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <title>IFE JavaScript Task 09</title>
+    <style>
+        div {
+           
+            border:1px solid;            
+            padding:5px 10px;
+            margin:3px;
+            background:white;
+            float:left;
+        
+        }
+            div:hover {
+            cursor:pointer;
+            }
+        p:hover {
+        cursor:pointer;
+        }
+           
+        .bottom {
+          width:43%;
+          float:left;         
+        }
+
+        input {
+            margin-top:20px;
+        }
+        .beginner {
+        width:88%;
+        height:600px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="beginner">
+        <p>Super</p>
+        <div>
+            <p>What</p>
+            <div>
+                <p>Apple</p>
+                <div><p>Pear</p></div>
+                <div><p>Pig</p></div>
+                <div><p>Cola</p></div>
+                <div><p>Soccor</p></div>
+            </div>
+            <div>
+               <p> Phone</p>
+            </div>
+            <div>
+                <div><p>Book</p></div>
+                <div><p>School</p></div>
+            </div>
+        </div>
+        <div>
+            <p>Note</p>
+            <div><p>Human</p>
+                <div><p>Code</p></div>
+                <div><p>Operate</p></div>
+                <div><p>Man</p></div>
+            </div>
+            <div><p>Program</p>
+                <div><p>Element</p>
+                    <div><p>Cat</p></div>
+                </div>
+                <div><p>Gross</p></div>
+            </div>
+        </div>
+        <div>
+            <p>Fish</p>
+        </div>
+    </div>
+    
+     <input id="Button1" type="button" value="前序遍历" />
+<!--     <input id="Button2" type="button" value="中序遍历" />-->
+     <input id="Button3" type="button" value="后序遍历" />
+     <input id="srh" type="text">
+    <button id="search">搜索字段</button>
+    <button id="del">删除元素</button>
+    <input id="Text1" type="text">
+    <button id="add">添加元素</button>
+
+</body>
+
+    <script type="text/javascript">
+        var divList = [];
+        var serResult = [];
+        var selected = [];
+        timer = null;
+
+        function preOrder(node) {
+            //           alert("1");
+
+            if (node.length > 0) {
+
+                divList.push(node);
+
+                var n = node.children("div").length;
+                for (var i = 0; i < n; i++) {
+
+                    preOrder($(node.children("div").get(i)));
+                }
+
+            }
+
+        }
+
+        //function inOrder(node) {
+        //    //           alert("1");
+
+        //    if (node.length > 0) {
+
+
+        //        inOrder($(node.children("div").get(0)));
+        //        divList.push(node);
+        //        inOrder($(node.children("div").get(1)));
+
+        //    }
+
+
+        //}
+
+        function postOrder(node) {
+            //           alert("1");
+
+            if (node.length > 0) {
+                var n = node.children("div").length;
+                for (var i = 0; i < n; i++) {
+                    postOrder($(node.children("div").get(i)));
+                }
+                divList.push(node);
+            }
+
+        }
+        function checkRender(arr, txt) {
+            var i = 0;
+            arr[i].css("background-color", "yellow");
+            if ($(arr[i].children("p").get(0)).text() == txt)
+            { $(arr[i].children("p").get(0)).css("color", "red"); serResult.push(arr[i]); }
+
+            timer = setInterval(function () {
+                if (i < arr.length - 1) {
+                    i++;
+                    arr[i - 1].css("background-color", "#fff");
+                    arr[i].css("background-color", "yellow");
+                    if ($(arr[i].children("p").get(0)).text() == txt)
+                    { $(arr[i].children("p").get(0)).css("color", "red"); serResult.push(arr[i]); }
+                }
+                else {
+                    clearInterval(timer);
+                    if (serResult.length == 0) {
+                        alert("未找到");
+                    }
+                    arr[i].css("background-color", "#fff");
+                }
+            }, 500);
+        }
+
+
+        function Render(arr) {
+            var i = 0;
+            arr[i].css("background-color", "yellow")
+            timer = setInterval(function () {
+                if (i < arr.length - 1) {
+                    i++;
+                    arr[i - 1].css("background-color", "#fff");
+
+                    arr[i].css("background-color", "yellow");
+                }
+                else {
+                    clearInterval(timer);
+                    arr[i].css("background-color", "#fff");
+                }
+            }, 500);
+        }
+
+
+        function reset() {
+            
+            for (var i = 0; i < divList.length; i++) {
+                divList[i].css("background-color", "#fff");
+            }
+            for (var i = 0; i < serResult.length; i++) {
+                $(serResult[i].children("p").get(0)).css("color", "black");
+            }
+            divList = [];
+            serResult = [];
+            clearInterval(timer);
+
+        }
+
+        $("#Button1").click(function () {
+            reset();
+            preOrder($(".beginner"));
+            Render(divList);
+
+        })
+
+        //$("#Button2").click(function () {
+        //    reset();
+        //    inOrder($(".beginner"));
+        //    Render(divList);
+        //})
+       
+        $("#Button3").click(function () {
+            reset();
+            postOrder($(".beginner"));
+            Render(divList);
+        })
+        $("#search").click(function () {
+            reset();
+            var serTxt = $("#srh").val();
+            preOrder($(".beginner"));
+            checkRender(divList, serTxt);
+        })
+        $("#del").click(function (e) {
+            selected[0].remove();
+        });
+        $("#add").click(function (e) {
+            
+            var addNode = $("#Text1").val();
+            var obj = document.createElement("div");
+            obj.innerHTML = addNode;           
+                selected[0].append(obj);
+        
+        });
+        $("div").click(function (e) {
+            //选择时先清空其他选择。
+            postOrder($(".beginner"));
+            for (var i = 0; i < divList.length; i++) {
+                divList[i].css("background-color", "#fff");
+            }
+            selected = [];
+            //改变选中的样式,并将选中对象加入selected中。
+            if ($(e.target).is("div")) {
+                $(e.target).css("background-color", "green");
+                selected.push($(e.target));
+            }
+            else {
+                $(e.target).parent().css("background-color", "green");
+
+                selected.push($(e.target).parent());
+
+            }
+          
+        })
+
+
+
+    </script>
+
+</html>
