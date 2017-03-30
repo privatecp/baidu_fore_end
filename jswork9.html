@@ -221,13 +221,15 @@
             checkRender(divList, serTxt);
         })
         $("#del").click(function (e) {
+            if (selected.length>0)
             selected[0].remove();
         });
         $("#add").click(function (e) {
             
             var addNode = $("#Text1").val();
             var obj = document.createElement("div");
-            obj.innerHTML = addNode;           
+            obj.innerHTML = addNode;
+            if (selected.length > 0)
                 selected[0].append(obj);
         
         });
