@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 01</title>
+      <script type="text/javascript"  src="../js/jquery-1.8.3.min.js"></script>
+      <style type="text/css">
+          tr {
+          
+          }
+          td {
+              text-align:center;
+              height:40px;
+          width:80px;
+          }
+          tr td {
+          padding:-2px;
+          }
+          td {
+         
+          box-sizing:border-box;
+          }
+          table {
+          position:absolute;
+          left:calc( 50% - 300px);
+          top:200px;
+          }
+          .block {
+
+          width:400px;
+          }
+          button {
+          height:100%;
+          width:100%;
+          background:#0094ff;
+          color:#fff;
+          border-radius:3px;
+          border:initial;
+          }
+          input {
+              margin-top:55px;
+          height:90%;
+          width:90%;
+          border:1px solid;
+          border-color:#666;
+          border-radius:3px;
+          }
+          #info {
+          color:#666;
+          text-align:left;
+          margin-left:20px;
+          }
+         
+      </style>
+  </head>
+
+<body>
+<table>
+    <tr>
+        <td>名称</td>
+        <td class="block" id="inpt"><input id="txt" type="text" /><p id="info">必填，长度为4~16个字符</p></td>
+        <td><button>验证</button></td>
+    </tr>
+    
+   
+     
+</table>
+</body>
+   <script type="text/javascript">
+       $("button").on("click", function () {
+           var val = $("#txt").val();
+           val = val.replace(/[\u4e00-\u9fa5]/g, 'aa')
+          if (val == "")
+          {
+              $("#info").text("名称不能为空");
+              $("#info").css("color", "red");
+              $("#txt").css("border-color","red");
+          }
+          else if (3< val.length && 17 > val.length) {
+              $("#info").text("名称格式正确");
+              $("#info").css("color", "green");
+              $("#txt").css("border-color", "green");
+          }
+          else {
+              $("#info").text("长度为4~16个字符");
+              $("#info").css("color", "red");
+              $("#txt").css("border-color", "red");
+          }
+       })
+
+</script>
+</html>
