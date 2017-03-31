@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="text/javascript" src="js/three.js"></script>
+    <script type="text/javascript" src="js/OrbitControls.js"></script>
+    <title></title>
+    <style type="text/css">
+        #view {
+            border: 1px solid;
+            cursor: pointer;
+            width: 100%;
+            height: 600px;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body onload="threeStart()">
+<div id="view"></div>
+</body>
+    <script>
+        var renderer;
+        function initThree()
+        {
+            width=document.getElementById('view').clientWidth;
+            height=document.getElementById('view').clientHeight;
+            renderer=new THREE.WebGLRenderer();
+            renderer.setSize(width,height);
+            document.getElementById('view').appendChild(renderer.domElement);
+            renderer.setClearColor(0xFFFFFF,1.0);
+        }
+        var camera;
+        function initCamera()
+        {
+            camera=new THREE.PerspectiveCamera(45,width/height,1,10000)
+            camera.position.x=1000;
+            camera.position.y=900;
+            camera.position.z=30;
+            camera.up.x=0;
+            camera.up.y=0;
+            camera.up.z=1;
+            camera.lookAt({x:0,y:0,z:0});
+            var controls = new THREE.OrbitControls(camera);
+            controls.addEventListener('change',render);
+        }
+        var scene;
+        function initScene() {
+            scene = new THREE.Scene();
+
+        }
+
+        var light;
+        function initLight() {
+            var ambientLight = new THREE.AmbientLight(0xFFFFFF);   // 添加环境光
+            scene.add(ambientLight);
+
+        }
+        var cube;
+        function initObject() {
+
+            var geometry = new THREE.Geometry();
+            //var material = new THREE.LineBasicMaterial( { vertexColors: THREE.VertexColors} );
+
+            // 线的材质可以由2点的颜色决定
+
+            //the roof of our car
+
+            var box=new THREE.BoxGeometry(200,400,100);
+
+            var color=new THREE.MeshLambertMaterial({color: 0x5887EE});
+            var color2=new THREE.MeshLambertMaterial({color:0x73EE83});
+            var color3=new THREE.MeshLambertMaterial({color:0x00EE00});
+            var cube = new THREE.Mesh(box, color);
+            //wheelof the car
+            var cir=new THREE.TorusGeometry(60,30,30,60);
+
+            wheel1=  new THREE.Mesh(cir, color2);
+            wheel1.position.set(-50,-100,-70);
+            wheel1.rotateY(1.6);
+
+            wheel2=new THREE.Mesh(cir, color2);
+            wheel2.position.set(50,-100,-70);
+            wheel2.rotateY(1.6);
+
+            wheel3=new THREE.Mesh(cir, color2);
+            wheel3.position.set(50,100,-70);
+            wheel3.rotateY(1.6);
+
+            wheel4=new THREE.Mesh(cir, color2);
+            wheel4.position.set(-50,100,-70);
+            wheel4.rotateY(1.6);
+
+            //ground
+            var plane=new THREE.PlaneGeometry(1000,1000);
+            var ground = new THREE.Mesh(plane, color3);
+            ground.position.set(0,0,-180);
+
+
+
+           scene.add(cube);
+           scene.add(wheel1);
+            scene.add(wheel2);
+            scene.add(wheel3);
+            scene.add(wheel4);
+
+           scene.add(ground);
+
+        }
+        function render()
+        {
+
+            renderer.render(scene, camera);
+
+        }
+        function threeStart() {
+            initThree();
+            initCamera();
+            initScene();
+            initLight();
+            initObject();
+            render();
+        }
+
+
+    </script>
+</html>
